@@ -18,7 +18,10 @@ use super::pool::{
 #[cfg(feature = "tcp")]
 use super::HttpConnector;
 use crate::body::{Body, HttpBody};
-use crate::common::{exec::BoxSendFuture, sync_wrapper::SyncWrapper, lazy as hyper_lazy, task, Future, Lazy, Pin, Poll};
+use crate::common::{
+    exec::BoxSendFuture, lazy as hyper_lazy, sync_wrapper::SyncWrapper, task, Future, Lazy, Pin,
+    Poll,
+};
 use crate::rt::Executor;
 
 /// A Client to make outgoing HTTP requests.
@@ -586,7 +589,7 @@ impl ResponseFuture {
         F: Future<Output = crate::Result<Response<Body>>> + Send + 'static,
     {
         Self {
-            inner: SyncWrapper::new(Box::pin(value))
+            inner: SyncWrapper::new(Box::pin(value)),
         }
     }
 

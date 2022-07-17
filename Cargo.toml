@@ -36,13 +36,14 @@ itoa = "1"
 tracing = { version = "0.1", default-features = false, features = ["std"] }
 pin-project-lite = "0.2.4"
 tower-service = "0.3"
-tokio = { version = "1", features = ["sync"] }
+tokio = { git="https://github.com/WasmEdge/tokio.git", branch = "wasmedge", features = ["sync"] }
 want = "0.3"
 
 # Optional
 
 libc = { version = "0.2", optional = true }
 socket2 = { version = "0.4", optional = true }
+wasmedge_wasi_socket = {git="https://github.com/MediosZ/wasmedge_wasi_socket.git", branch = "tcplistener", optional = true }
 
 [dev-dependencies]
 futures-util = { version = "0.3", default-features = false, features = ["alloc"] }
@@ -52,13 +53,13 @@ pretty_env_logger = "0.4"
 spmc = "0.3"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-tokio = { version = "1", features = [
+tokio = { git="https://github.com/WasmEdge/tokio.git", branch = "wasmedge", version = "1", features = [
     "fs",
     "macros",
     "io-std",
     "io-util",
     "rt",
-    "rt-multi-thread", # so examples can use #[tokio::main]
+    # "rt-multi-thread", # so examples can use #[tokio::main]
     "sync",
     "time",
     "test-util",
@@ -73,14 +74,14 @@ pnet_datalink = "0.27.2"
 
 [features]
 # Nothing by default
-default = []
+default = ["client", "http1", "runtime"]
 
 # Easily turn it all on
 full = [
     "client",
     "http1",
-    "http2",
-    "server",
+    # "http2",
+    # "server",
     "runtime",
 ]
 
@@ -99,7 +100,7 @@ runtime = [
     "tokio/time",
 ]
 tcp = [
-    "socket2",
+    "wasmedge_wasi_socket",
     "tokio/net",
     "tokio/rt",
     "tokio/time",
@@ -130,12 +131,12 @@ incremental = false
 [[example]]
 name = "client"
 path = "examples/client.rs"
-required-features = ["full"]
+# required-features = ["full"]
 
 [[example]]
 name = "client_json"
 path = "examples/client_json.rs"
-required-features = ["full"]
+# required-features = ["full"]
 
 [[example]]
 name = "echo"
