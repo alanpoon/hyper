@@ -1,6 +1,9 @@
 use std::fmt;
 use std::io;
+#[cfg(not(target_os = "wasi"))]
 use std::net::{SocketAddr, TcpListener as StdTcpListener};
+#[cfg(target_os = "wasi")]
+use wasmedge_wasi_socket::{SocketAddr, TcpListener as StdTcpListener};
 use std::time::Duration;
 
 use tokio::net::{TcpListener, TcpStream};
@@ -24,16 +27,27 @@ pub struct AddrIncoming {
 
 impl AddrIncoming {
     pub(super) fn new(addr: &SocketAddr) -> crate::Result<Self> {
+        #[cfg(not(target_os = "wasi"))]
         let std_listener = StdTcpListener::bind(addr).map_err(crate::Error::new_listen)?;
+        #[cfg(target_os = "wasi")]
+        let std_listener = StdTcpListener::bind(addr, true).map_err(crate::Error::new_listen)?;
 
         AddrIncoming::from_std(std_listener)
     }
 
+    #[cfg(not(target_os = "wasi"))]
     pub(super) fn from_std(std_listener: StdTcpListener) -> crate::Result<Self> {
         // TcpListener::from_std doesn't set O_NONBLOCK
         std_listener
             .set_nonblocking(true)
             .map_err(crate::Error::new_listen)?;
+        let listener = TcpListener::from_std(std_listener).map_err(crate::Error::new_listen)?;
+        AddrIncoming::from_listener(listener)
+    }
+
+    #[cfg(target_os = "wasi")]
+    pub(super) fn from_std(std_listener: StdTcpListener) -> crate::Result<Self> {
+        // TcpListener::from_std doesn't set O_NONBLOCK
         let listener = TcpListener::from_std(std_listener).map_err(crate::Error::new_listen)?;
         AddrIncoming::from_listener(listener)
     }
@@ -106,6 +120,7 @@ impl AddrIncoming {
         loop {
             match ready!(self.listener.poll_accept(cx)) {
                 Ok((socket, _)) => {
+                    #[cfg(not(target_os = "wasi"))]
                     if let Some(dur) = self.tcp_keepalive_timeout {
                         let socket = socket2::SockRef::from(&socket);
                         let conf = socket2::TcpKeepalive::new().with_time(dur);
@@ -113,6 +128,7 @@ impl AddrIncoming {
                             trace!("error trying to set TCP keepalive: {}", e);
                         }
                     }
+                    #[cfg(not(target_os = "wasi"))]
                     if let Err(e) = socket.set_nodelay(self.tcp_nodelay) {
                         trace!("error trying to set TCP nodelay: {}", e);
                     }

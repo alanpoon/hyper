@@ -74,14 +74,14 @@ pnet_datalink = "0.27.2"
 
 [features]
 # Nothing by default
-default = ["client", "http1", "runtime"]
+default = ["client", "http1", "runtime", "server"]
 
 # Easily turn it all on
 full = [
     "client",
     "http1",
     # "http2",
-    # "server",
+    "server",
     "runtime",
 ]
 
@@ -141,7 +141,7 @@ path = "examples/client_json.rs"
 [[example]]
 name = "echo"
 path = "examples/echo.rs"
-required-features = ["full"]
+# required-features = ["full"]
 
 [[example]]
 name = "gateway"

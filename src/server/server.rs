@@ -1,7 +1,9 @@
 use std::error::Error as StdError;
 use std::fmt;
-#[cfg(feature = "tcp")]
+#[cfg(all(feature = "tcp", not(target_os = "wasi")))]
 use std::net::{SocketAddr, TcpListener as StdTcpListener};
+#[cfg(all(feature = "tcp", target_os = "wasi"))]
+use wasmedge_wasi_socket::{SocketAddr, TcpListener as StdTcpListener};
 #[cfg(any(feature = "tcp", feature = "http1"))]
 use std::time::Duration;
 
