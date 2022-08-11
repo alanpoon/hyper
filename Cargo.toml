@@ -31,7 +31,7 @@ http-body = { git = "https://github.com/hyperium/http-body", branch = "master" }
 http-body-util = { git = "https://github.com/hyperium/http-body", branch = "master" }
 httpdate = "1.0"
 httparse = "1.6"
-h2 = { git="https://github.com/MediosZ/h2.git", branch = "wasmedge", optional = true }
+h2 = { git="https://github.com/WasmEdge/h2.git", branch = "wasmedge", optional = true }
 itoa = "1"
 tracing = { version = "0.1", default-features = false, features = ["std"] }
 pin-project-lite = "0.2.4"
