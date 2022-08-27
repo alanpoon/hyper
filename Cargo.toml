@@ -43,7 +43,7 @@ want = "0.3"
 
 libc = { version = "0.2", optional = true }
 socket2 = { version = "0.4", optional = true }
-wasmedge_wasi_socket = {git="https://github.com/MediosZ/wasmedge_wasi_socket.git", branch = "tcplistener", optional = true }
+wasmedge_wasi_socket = {git="https://github.com/second-state/wasmedge_wasi_socket.git", optional = true }
 
 [dev-dependencies]
 futures-util = { version = "0.3", default-features = false, features = ["alloc"] }
