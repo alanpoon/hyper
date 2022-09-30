@@ -1,16 +1,13 @@
-# [hyper](https://hyper.rs)
+# [hyper](https://hyper.rs) for WebAssembly: hyper_wasi
 
-[![crates.io](https://img.shields.io/crates/v/hyper.svg)](https://crates.io/crates/hyper)
-[![Released API docs](https://docs.rs/hyper/badge.svg)](https://docs.rs/hyper)
-[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
-[![CI](https://github.com/hyperium/hyper/workflows/CI/badge.svg)](https://github.com/hyperium/hyper/actions?query=workflow%3ACI)
-[![Discord chat][discord-badge]][discord-url]
+A **fast** and **correct** HTTP implementation for Rust. 
+This is a fork from the original [hyper](https://github.com/hyperium/hyper) with support for WebAssembly compilation target.
+That allows hyper client and server apps to run inside the [WasmEdge Runtime](https://github.com/WasmEdge/WasmEdge#readme) as a lightweight and secure alternative to natively compiled apps in Linux container.
 
-A **fast** and **correct** HTTP implementation for Rust.
+For more details and usage examples, please see the upstream [hyper](https://github.com/hyperium/hyper) source and [these examples](https://github.com/WasmEdge/wasmedge_hyper_demo).
 
-> **Note**: hyper's [master](https://github.com/hyperium/hyper) branch is
-> currently preparing breaking changes. For the most recently *released* code,
-> look to the [0.14.x branch](https://github.com/hyperium/hyper/tree/0.14.x).
+Note: We do not yet support SSL / TLS connections in hyper_wasi yet.
+
 
 - HTTP/1 and HTTP/2
 - Asynchronous design
@@ -20,16 +17,6 @@ A **fast** and **correct** HTTP implementation for Rust.
 - Client and Server APIs
 
 **Get started** by looking over the [guides](https://hyper.rs/guides).
-
-## "Low-level"
-
-hyper is a relatively low-level library, meant to be a building block for
-libraries and applications.
-
-If you are looking for a convenient HTTP client, then you may wish to consider
-[reqwest](https://github.com/seanmonstar/reqwest). If you are looking for a
-convenient HTTP server, then you may wish to consider [warp](https://github.com/seanmonstar/warp).
-Both are built on top of this library.
 
 ## Contributing
 
