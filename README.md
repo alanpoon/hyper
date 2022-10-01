@@ -22,11 +22,7 @@ Note: We do not yet support SSL / TLS connections in hyper_wasi yet.
 
 To get involved, take a look at [CONTRIBUTING](CONTRIBUTING.md).
 
-If you prefer chatting, there is an active community in the [Discord server][discord-url].
-
 ## License
 
 hyper is provided under the MIT license. See [LICENSE](LICENSE).
 
-[discord-badge]: https://img.shields.io/discord/500028886025895936.svg?logo=discord
-[discord-url]: https://discord.gg/kkwpueZ
