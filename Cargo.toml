@@ -1,5 +1,5 @@
 [package]
-name = "hyper_wasi"
+name = "hyper"
 version = "0.15.0"
 description = "A fast and correct HTTP library."
 readme = "README.md"
@@ -33,12 +33,12 @@ http-body = "0.4"
 # http-body-util = "0.4"
 httpdate = "1.0"
 httparse = "1.6"
-h2_wasi = { version = "0.3.14", optional = true }
+h2 = { version = "0.3.14", optional = true }
 itoa = "1"
 tracing = { version = "0.1", default-features = false, features = ["std"] }
 pin-project-lite = "0.2.4"
 tower-service = "0.3"
-tokio_wasi = { version="1", features = ["sync"] }
+tokio = { version="1", features = ["sync"] }
 want = "0.3"
 
 # Optional
@@ -55,7 +55,7 @@ pretty_env_logger = "0.4"
 spmc = "0.3"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-tokio_wasi = { version = "1", features = [
+tokio = { version = "1", features = [
     "fs",
     "macros",
     "io-std",
@@ -67,7 +67,7 @@ tokio_wasi = { version = "1", features = [
     "test-util",
 ] }
 # tokio-test = "0.4"
-tokio-util_wasi = { version = "0.7", features = ["codec"] }
+tokio-util = { version = "0.7", features = ["codec"] }
 # tower = { version = "0.4", features = ["make", "util"] }
 url = "2.2"
 
@@ -89,7 +89,7 @@ full = [
 
 # HTTP versions
 http1 = []
-http2 = ["h2_wasi"]
+http2 = ["h2"]
 
 # Client/Server
 client = []
@@ -98,14 +98,14 @@ server = []
 # Tokio support
 runtime = [
     "tcp",
-    "tokio_wasi/rt",
-    "tokio_wasi/time",
+    "tokio/rt",
+    "tokio/time",
 ]
 tcp = [
     "wasmedge_wasi_socket",
-    "tokio_wasi/net",
-    "tokio_wasi/rt",
-    "tokio_wasi/time",
+    "tokio/net",
+    "tokio/rt",
+    "tokio/time",
 ]
 
 # C-API support (currently unstable (no semver))
@@ -252,3 +252,6 @@ required-features = ["full"]
 name = "server"
 path = "tests/server.rs"
 required-features = ["full"]
+
+[patch.crates-io]
+tokio = {path = "../tokio/tokio"}
